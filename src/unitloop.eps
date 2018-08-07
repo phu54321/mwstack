@@ -31,17 +31,5 @@ function unitLoop() {
                 SetResources(player, SetTo, lifesys.reviveTime, Gas);
             }
         }
-
-        // Trap impl
-        else if(unitType == $U('Trap')) {
-            const origDstX, origDstY = dwbreak(dwread_epd(epd + (0x58 / 4)))[[0, 1]];
-            for(var angle = 0 ; angle < 90 ; angle += 15) {
-                const cos, sin = lengthdir(32 * 5, angle);
-                loc.pxMoveLocation('pxmove', posX - cos, posY - sin, cos * 2, sin * 2);
-                Order('(men)', player, 'pxmove', Move, 'pxmove');
-            }
-            loc.pxMoveLocation('pxmove', posX - 1, posY - 1, 2, 2);
-            Order('Trap', player, 'pxmove', Move, 'pxmove');
-        }
     }
 }

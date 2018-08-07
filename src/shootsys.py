@@ -10,6 +10,7 @@ from patterns import (
     sidestage,
     single,
     moveto,
+    trap,
 )
 
 unitPatternMap = {
@@ -22,7 +23,7 @@ unitPatternMap = {
     'Missile [N]': single.f_missile_impl,
     'Fast Missile [N]': single.f_fast_impl,
     'Refractor [N]': single.f_refractor_impl,
-    'Trap [N]': single.f_trap_impl,
+    'Trap [N]': trap.f_impl,
 }
 
 @EUDFunc

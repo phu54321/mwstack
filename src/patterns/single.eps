@@ -19,9 +19,3 @@ function refractor_impl(p: patternbase.Pattern) {
     common.createMissilePx(p, 'Refractor', afX + 32 * p.x + 48, afY + 32 * p.y + 32);
     return 0;
 }
-
-function trap_impl(p: patternbase.Pattern) {
-    const afX, afY = loc.getTopLeft('allyField');
-    common.createMissilePx(p, 'Trap', afX + 32 * p.x + 48, afY + 32 * p.y + 32);
-    return 0;
-}
