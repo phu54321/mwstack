@@ -61,10 +61,10 @@ function setMissileLocations(force: TrgPlayer) {
         loc.pxMoveLocation('allyField', f1x, f1y, 64 * 11, 64 * 5);
         loc.pxMoveLocation('opponentField', f2x, f2y, 64 * 11, 64 * 5);
 
-        const fromY = f1y + 64 * 2;
+        const fromY = f1y;
         const toY = f2y + 64 * 6;
         for(var x = 0 ; x < 11 ; x++ ) {
-            loc.pxMoveLocation(vFromArray[x], vxStart + 64 * x, fromY, 64, 64);
+            loc.pxMoveLocation(vFromArray[x], vxStart + 64 * x, fromY, 64, 64 * 5);
             loc.pxMoveLocation(vToArray[x],  vxStart + 64 * x, toY, 64, 64);
         }
         for(var y = 0 ; y < 5 ; y++) {
@@ -75,11 +75,11 @@ function setMissileLocations(force: TrgPlayer) {
         loc.pxMoveLocation('allyField', f2x, f2y, 64 * 11, 64 * 5);
         loc.pxMoveLocation('opponentField', f1x, f1y, 64 * 11, 64 * 5);
 
-        const fromY = f2y + 64 * 2;
+        const fromY = f2y;
         const toY = f1y - 64 * 2;
 
         for(var x = 0 ; x < 11 ; x++ ) {
-            loc.pxMoveLocation(vFromArray[x], vxStart + 64 * x, fromY, 64, 64);
+            loc.pxMoveLocation(vFromArray[x], vxStart + 64 * x, fromY, 64, 64 * 5);
             loc.pxMoveLocation(vToArray[x],  vxStart + 64 * x, toY, 64, 64);
         }
         for(var y = 0 ; y < 5 ; y++) {

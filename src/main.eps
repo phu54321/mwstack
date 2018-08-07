@@ -7,6 +7,21 @@ import shootsys;
 
 function onPluginStart() {
     lifesys.initLifeSys();
+
+    // EUD Editor: disable need of pylon for all buildings
+    SetMemory(0x6642EC, Subtract, 524288);
+    SetMemory(0x6642FC, Subtract, 524288);
+    SetMemory(0x664300, Subtract, 524288);
+    SetMemory(0x664308, Subtract, 524288);
+    SetMemory(0x66430C, Subtract, 524288);
+    SetMemory(0x664310, Subtract, 524288);
+    SetMemory(0x664314, Subtract, 524288);
+    SetMemory(0x664318, Subtract, 524288);
+    SetMemory(0x66431C, Subtract, 524288);
+    SetMemory(0x664324, Subtract, 524288);
+    SetMemory(0x664328, Subtract, 524288);
+    SetMemory(0x66432C, Subtract, 524288);
+    SetMemory(0x664330, Subtract, 524288);
 }
 
 

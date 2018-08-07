@@ -8,6 +8,9 @@ from patterns import (
     center,
     sidecenter,
     sidestage,
+    missile,
+    fastmissile,
+
 )
 
 unitPatternMap = {
@@ -15,6 +18,8 @@ unitPatternMap = {
     'Center Missile [N]': center,
     'Side Center Missile [N]': sidecenter,
     'Side Stage Missile [N]': sidestage,
+    'Missile [N]': missile,
+    'Fast Missile [N]': fastmissile,
 }
 
 @EUDFunc

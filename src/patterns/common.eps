@@ -1,5 +1,6 @@
 import patternbase;
 import locSetting;
+import location as loc;
 
 function getNextGeneratedUnit() {
     var ptr, epd = dwepdread_epd(EPD(0x628438));
@@ -15,6 +16,12 @@ function makeUnitStackable(epd) {
         );
 }
 
+function createMissilePx(p: patternbase.Pattern, unit: TrgUnit, x, y) {
+    loc.pxMoveLocationDot('pxmove', x, y);
+    const epd = getNextGeneratedUnit();
+    CreateUnit(1, unit, 'pxmove', p.forcePlayer);
+    makeUnitStackable(epd);
+}
 
 function createVMissile(p: patternbase.Pattern, unit: TrgUnit, col) {
     const location = locSetting.vFromArray[col - 1];

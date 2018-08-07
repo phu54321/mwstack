@@ -1,0 +1,9 @@
+import patternbase;
+import patterns.common;
+import location as loc;
+
+function impl(p: patternbase.Pattern) {
+    const afX, afY = loc.getTopLeft('allyField');
+    common.createMissilePx(p, 'Missile', afX + 32 * p.x + 48, afY + 32 * p.y + 32);
+    return 0;
+}

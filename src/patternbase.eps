@@ -54,7 +54,7 @@ function loopPatterns() {
             else {
                 const pPrev = p.prev;
                 pPrev.next = pNext;
-                pNext.prev = pPrev;
+                if(pNext) pNext.prev = pPrev;
             }
             Pattern.free(p);
         }
