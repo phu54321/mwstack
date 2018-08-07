@@ -1,16 +1,22 @@
+import patterns.locSetting;
+
 object Pattern {
     var prev: selftype, next: selftype;
     var timer;
+    var player;
+    var forcePlayer;
     var callback: EUDFuncPtr(1, 1);
 };
 
 
 var patternHead, patternTail = 0, 0;
 
-function addPattern(callback: EUDFuncPtr(1, 1)) {
+function addPattern(player: TrgPlayer, callback: EUDFuncPtr(1, 1)) {
     const p = Pattern.alloc();
     p.callback = callback;
     p.timer = 0;
+    p.player = player;
+    p.forcePlayer = locSetting.forceFromPlayer(player);
 
     if(patternHead) {
         const lastPattern = Pattern.cast(patternTail);
@@ -35,6 +41,8 @@ function loopPatterns() {
     while(pv) {
         const p = Pattern.cast(pv);
         const pNext = p.next;
+
+        locSetting.setMissileLocations(p.forcePlayer);
 
         if(!p.callback(p)) {
             if(p == patternHead) {

@@ -1,0 +1,84 @@
+import location as loc;
+
+const vFromArray = [
+    EncodeLocation('vfrom1'),
+    EncodeLocation('vfrom2'),
+    EncodeLocation('vfrom3'),
+    EncodeLocation('vfrom4'),
+    EncodeLocation('vfrom5'),
+    EncodeLocation('vfrom6'),
+    EncodeLocation('vfrom7'),
+    EncodeLocation('vfrom8'),
+    EncodeLocation('vfrom9'),
+    EncodeLocation('vfrom10'),
+    EncodeLocation('vfrom11'),
+];
+
+const vToArray = [
+    EncodeLocation('vto1'),
+    EncodeLocation('vto2'),
+    EncodeLocation('vto3'),
+    EncodeLocation('vto4'),
+    EncodeLocation('vto5'),
+    EncodeLocation('vto6'),
+    EncodeLocation('vto7'),
+    EncodeLocation('vto8'),
+    EncodeLocation('vto9'),
+    EncodeLocation('vto10'),
+    EncodeLocation('vto11'),
+];
+
+
+const hFromArray = [
+    EncodeLocation('hfrom1'),
+    EncodeLocation('hfrom2'),
+    EncodeLocation('hfrom3'),
+    EncodeLocation('hfrom4'),
+    EncodeLocation('hfrom5'),
+];
+
+const hToArray = [
+    EncodeLocation('hto1'),
+    EncodeLocation('hto2'),
+    EncodeLocation('hto3'),
+    EncodeLocation('hto4'),
+    EncodeLocation('hto5'),
+];
+
+
+function forceFromPlayer(player: TrgPlayer) {
+    return (player == $P1 || player == $P2 || player == $P3 || player == $P7) ? $P7 : $P8;
+}
+
+function setMissileLocations(force: TrgPlayer) {
+    const f1vx, f1vy = loc.getTopLeft('f1field');
+    const f2vx, f2vy = loc.getTopLeft('f2field');
+    const vxStart = f1vx;
+    const hFromX = vxStart - 64 * 2;
+    const hToX = vxStart + 64 * 12;
+
+    if (force == $P7) {
+        const fromY = f1vy + 64 * 2;
+        const toY = f2vy + 64 * 6;
+        for(var x = 0 ; x < 11 ; x++ ) {
+            loc.pxMoveLocation(vFromArray[x], vxStart + 64 * x, fromY, 64, 64);
+            loc.pxMoveLocation(vToArray[x],  vxStart + 64 * x, toY, 64, 64);
+        }
+        for(var y = 0 ; y < 5 ; y++) {
+            loc.pxMoveLocation(hFromArray[y], hFromX, f2vy + 4 * y, 64, 64);
+            loc.pxMoveLocation(hToArray[y], hToX, f2vy + 4 * y, 64, 64);
+        }
+    } else {
+        const fromY = f2vy + 64 * 2;
+        const toY = f1vy - 64 * 2;
+
+        for(var x = 0 ; x < 11 ; x++ ) {
+            loc.pxMoveLocation(vFromArray[x], vxStart + 64 * x, fromY, 64, 64);
+            loc.pxMoveLocation(vToArray[x],  vxStart + 64 * x, toY, 64, 64);
+        }
+        for(var y = 0 ; y < 5 ; y++) {
+            loc.pxMoveLocation(hFromArray[y], hFromX, f1vy + 4 * y, 64, 64);
+            loc.pxMoveLocation(hToArray[y], hToX, f1vy + 4 * y, 64, 64);
+        }
+    }
+}

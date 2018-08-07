@@ -76,7 +76,7 @@ function lifeSysLoop() {
             
             const position = dwread_epd(epd + (0x28 / 4));
             const posX, posY = dwbreak(position)[[0, 1]];
-            loc.pxMoveLocation(posX, posY);
+            loc.pxMoveLocationDot('pxmove', posX, posY);
             MoveLocation('ptrace', 'Map Revealer', P12, 'pxmove');
 
             if(Bring(opponentPlayer, AtLeast, 1, '(men)', 'ptrace')) {

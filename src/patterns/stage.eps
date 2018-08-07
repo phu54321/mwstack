@@ -1,19 +1,13 @@
 import patterns.patternbase;
+import patterns.common;
 
 function impl(p: patternbase.Pattern) {
     SetCurrentPlayer(P1);
-    if(p.timer == 24 * 0) DisplayText("A0");
-    if(p.timer == 24 * 1) DisplayText("A1");
-    if(p.timer == 24 * 2) DisplayText("A2");
-    if(p.timer == 24 * 3) DisplayText("A3");
-    if(p.timer == 24 * 4) DisplayText("A4");
-    if(p.timer == 24 * 5) DisplayText("A5");
-    if(p.timer == 24 * 6) DisplayText("A6");
-    if(p.timer == 24 * 7) DisplayText("A7");
-    if(p.timer == 24 * 8) DisplayText("A8");
-    if(p.timer == 24 * 9) DisplayText("A8");
-    if(p.timer == 24 * 10) DisplayText("A8");
-    if(p.timer == 24 * 11) DisplayText("A8");
-    if(p.timer == 24 * 12) return 0;
+    for(var i = 0 ; i < 11 ; i++) {
+        if(p.timer == 24 * i) {
+            common.createVMissile(p, 'Fast Missile', i + 1);
+        }
+    }
+    if(p.timer == 24 * 11) return 0;
     return 1;
 }

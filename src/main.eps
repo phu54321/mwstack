@@ -3,11 +3,10 @@ import location as loc;
 import lifesys;
 import patterns.patternbase;
 import patterns.stage;
-
+import patterns.moveloop;
 
 function onPluginStart() {
     lifesys.initLifeSys();
-    patternbase.addPattern(stage.f_impl);
 }
 
 
@@ -16,11 +15,12 @@ function afterTriggerExec() {
     SetResources(AllPlayers, SetTo, 5000, Ore);
 
     if(Bring(P1, AtLeast, 1, "Terran Supply Depot", "Anywhere")) {
-        patternbase.addPattern(stage.f_impl);
+        patternbase.addPattern(P1, stage.f_impl);
         RemoveUnit("Terran Supply Depot", P1);
     }
 
     patternbase.loopPatterns();
     intro.introLoop();
     lifesys.lifeSysLoop();
+    moveloop.moveLoop();
 }

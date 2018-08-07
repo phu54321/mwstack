@@ -1,0 +1,14 @@
+import patterns.patternbase;
+import patterns.locSetting;
+
+function createVMissile(p: patternbase.Pattern, unit: TrgUnit, col) {
+    const location = locSetting.vFromArray[col - 1];
+
+    CreateUnit(1, unit, location, p.forcePlayer);
+}
+
+function createHMissile(p: patternbase.Pattern, unit: TrgUnit, reow) {
+    const location = locSetting.vToArray[reow - 1];
+
+    CreateUnit(1, unit, location, p.forcePlayer);
+}
