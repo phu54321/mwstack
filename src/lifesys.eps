@@ -48,7 +48,7 @@ function lifeSysLoop() {
                     SetCurrentPlayer(player);
                     PlayWAV("staredit\\wav\\Notice.wav");
                     DisplayText("\x16부품 수리가 완료되었습니다. 부활후3초간 무적상태를 유지합니다.");
-                    CreateUnit(1, "Basic Builder", playerForce == $Force1 ? $L('f1field') + 1 : $L('f2field') + 1, player);
+                    CreateUnit(1, "Builder", playerForce == $Force1 ? $L('f1field') + 1 : $L('f2field') + 1, player);
                 }
                 else {
                     // 생존점수 부족 → 리바이브 불가.

@@ -1,0 +1,27 @@
+import patternbase;
+import patterns.common;
+import location as loc;
+
+function missile_impl(p: patternbase.Pattern) {
+    const afX, afY = loc.getTopLeft('allyField');
+    common.createMissilePx(p, 'Missile', afX + 32 * p.x + 48, afY + 32 * p.y + 32);
+    return 0;
+}
+
+function fast_impl(p: patternbase.Pattern) {
+    const afX, afY = loc.getTopLeft('allyField');
+    common.createMissilePx(p, 'Fast Missile', afX + 32 * p.x + 48, afY + 32 * p.y + 32);
+    return 0;
+}
+
+function refractor_impl(p: patternbase.Pattern) {
+    const afX, afY = loc.getTopLeft('allyField');
+    common.createMissilePx(p, 'Refractor', afX + 32 * p.x + 48, afY + 32 * p.y + 32);
+    return 0;
+}
+
+function trap_impl(p: patternbase.Pattern) {
+    const afX, afY = loc.getTopLeft('allyField');
+    common.createMissilePx(p, 'Trap', afX + 32 * p.x + 48, afY + 32 * p.y + 32);
+    return 0;
+}

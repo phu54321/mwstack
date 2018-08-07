@@ -8,18 +8,21 @@ from patterns import (
     center,
     sidecenter,
     sidestage,
-    missile,
-    fastmissile,
-
+    single,
+    moveto,
 )
 
 unitPatternMap = {
-    'Stage Missile [N]': stage,
-    'Center Missile [N]': center,
-    'Side Center Missile [N]': sidecenter,
-    'Side Stage Missile [N]': sidestage,
-    'Missile [N]': missile,
-    'Fast Missile [N]': fastmissile,
+    'Stage Missile [N]': stage.f_impl,
+    'Center Missile [N]': center.f_impl,
+    'Side Center Missile [N]': sidecenter.f_impl,
+    'Side Stage Missile [N]': sidestage.f_impl,
+    'Move To [N]': moveto.f_impl,
+
+    'Missile [N]': single.f_missile_impl,
+    'Fast Missile [N]': single.f_fast_impl,
+    'Refractor [N]': single.f_refractor_impl,
+    'Trap [N]': single.f_trap_impl,
 }
 
 @EUDFunc
@@ -40,6 +43,6 @@ def f_shootLoop():
 
                 for unit, handlerModule in unitPatternMap.items():
                     if EUDIf()(Bring(p, AtLeast, 1, unit, "pxmove")):
-                        patternbase.f_addPattern(p, x, y, handlerModule.f_impl)
+                        patternbase.f_addPattern(p, x, y, handlerModule)
                         DoActions(RemoveUnitAt(1, unit, 'pxmove', p))
                     EUDEndIf()

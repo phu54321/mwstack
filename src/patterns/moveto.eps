@@ -4,6 +4,7 @@ import location as loc;
 
 function impl(p: patternbase.Pattern) {
     const afX, afY = loc.getTopLeft('allyField');
-    common.createMissilePx(p, 'Fast Missile', afX + 32 * p.x + 48, afY + 32 * p.y + 32);
+    loc.pxMoveLocation('pxmove', afX + 32 * p.x, afY + 32 * p.y, 64, 64);
+    MoveUnit(All, '(men)', p.player, 'Anywhere', 'pxmove');
     return 0;
 }
