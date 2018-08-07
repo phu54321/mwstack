@@ -4,6 +4,7 @@ import lifesys;
 import patternbase;
 import moveloop;
 import shootsys;
+import unitloop;
 
 function onPluginStart() {
     lifesys.initLifeSys();
@@ -32,6 +33,7 @@ function afterTriggerExec() {
     patternbase.loopPatterns();
     intro.introLoop();
     lifesys.lifeSysLoop();
+    unitloop.unitLoop();
     moveloop.moveLoop();
     shootsys.shootLoop();
 }

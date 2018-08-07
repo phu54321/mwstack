@@ -1,0 +1,47 @@
+import location as loc;
+import lifesys;
+
+function isBuilderUnit(u: TrgUnit) {
+    return (
+        u == $U("Basic Builder") ||
+        u == $U("Builder") ||
+        u == $U("Ultimate Builder")
+    ) ? 1 : 0;
+}
+
+function unitLoop() {
+    foreach(ptr, epd : EUDLoopUnit()) {
+        const unitType = dwread_epd(epd + (0x64 / 4));
+        const player = dwbreak(dwread_epd(epd + 0x4C / 4))[[2]];
+        const position = dwread_epd(epd + (0x28 / 4));
+        const posX, posY = dwbreak(position)[[0, 1]];
+
+        // Life system
+        if(isBuilderUnit(unitType)) {
+            const opponentPlayer = ($P1 <= player && player <= $P3) ? $P8 : $P7;
+            
+            loc.pxMoveLocationDot('pxmove', posX, posY);
+            MoveLocation('ptrace', 'Map Revealer', P12, 'pxmove');
+
+            if(Bring(opponentPlayer, AtLeast, 1, '(men)', 'ptrace')) {
+                KillUnitAt(All, '(any unit)', 'field', player);
+                KillUnitAt(1, '(men)', 'ptrace', opponentPlayer);
+                SetCurrentPlayer(player);
+                DisplayText("\x16적의 미사일이 명중하였습니다.\r\n\r\n\x16부품이 수리될때까지 기다려주세요.");
+                SetResources(player, SetTo, lifesys.reviveTime, Gas);
+            }
+        }
+
+        // Trap impl
+        else if(unitType == $U('Trap')) {
+            const origDstX, origDstY = dwbreak(dwread_epd(epd + (0x58 / 4)))[[0, 1]];
+            for(var angle = 0 ; angle < 90 ; angle += 15) {
+                const cos, sin = lengthdir(32 * 5, angle);
+                loc.pxMoveLocation('pxmove', posX - cos, posY - sin, cos * 2, sin * 2);
+                Order('(men)', player, 'pxmove', Move, 'pxmove');
+            }
+            loc.pxMoveLocation('pxmove', posX - 1, posY - 1, 2, 2);
+            Order('Trap', player, 'pxmove', Move, 'pxmove');
+        }
+    }
+}
