@@ -1,0 +1,56 @@
+object Pattern {
+    var prev: selftype, next: selftype;
+    var timer;
+    var callback: EUDFuncPtr(1, 1);
+};
+
+
+var patternHead, patternTail = 0, 0;
+
+function addPattern(callback: EUDFuncPtr(1, 1)) {
+    const p = Pattern.alloc();
+    p.callback = callback;
+    p.timer = 0;
+
+    if(patternHead) {
+        const lastPattern = Pattern.cast(patternTail);
+        lastPattern.next = p;
+        p.prev = lastPattern;
+        p.next = 0;
+        patternTail = p;
+    }
+
+    else {
+        p.prev = 0;
+        p.next = 0;
+        patternHead = p;
+        patternTail = p;
+    }
+}
+
+function loopPatterns() {
+    if(!patternHead) return;
+
+    var pv = patternHead;
+    while(pv) {
+        const p = Pattern.cast(pv);
+        const pNext = p.next;
+
+        if(!p.callback(p)) {
+            if(p == patternHead) {
+                patternHead = pNext;
+                if(pNext) pNext.prev = 0;
+            }
+            else {
+                const pPrev = p.prev;
+                pPrev.next = pNext;
+                pNext.prev = pPrev;
+            }
+            Pattern.free(p);
+        }
+        else {
+            p.timer += 1;
+        }
+        pv = pNext;
+    }
+}

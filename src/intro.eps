@@ -1,0 +1,27 @@
+var frame = 0;
+
+function introLoop() {
+    frame++;
+
+    const oldcp = getcurpl();
+    SetCurrentPlayer(getuserplayerid());
+    if(frame == 48) PlayWAV("staredit\\wav\\scan.wav");
+    if(frame == 48) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x05미\r\n\r\n\r\n\r\n\r\n\r\n\r\n", 4);
+    if(frame == 50) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x02미\x05사\r\n\r\n\r\n\r\n\r\n\r\n\r\n", 4);
+    if(frame == 52) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x07미\x02사\x05일\r\n\r\n\r\n\r\n\r\n\r\n\r\n", 4);
+    if(frame == 54) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x07미사\x02일\x05 \r\n\r\n\r\n\r\n\r\n\r\n\r\n", 4);
+    if(frame == 56) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x07미사일\x02 \x05피\r\n\r\n\r\n\r\n\r\n\r\n\r\n", 4);
+    if(frame == 58) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x07미사일 \x02피\x05하\r\n\r\n\r\n\r\n\r\n\r\n\r\n", 4);
+    if(frame == 60) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x07미사일 피\x02하\x05기\r\n\r\n\r\n\r\n\r\n\r\n\r\n", 4);
+    if(frame == 62) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x07미사일 피하\x02기\r\n\r\n\x13\x05Created by Factoria\r\n\r\n\r\n\r\n\r\n", 4);
+    if(frame == 64) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x07미사일 피하기\r\n\r\n\x13\x02Created by Factoria\r\n\r\n\x13\x05Cafe http://cafe.naver.com/missilewarfare.cafe\r\n\r\n\r\n", 4);
+    if(frame == 66) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x07미사일 피하기\r\n\r\n\x13\x03Created by \x04Factoria\r\n\r\n\x13\x02Cafe http://cafe.naver.com/missilewarfare.cafe\r\n\r\n\x13\x05Clan : Missile fam-\r\n", 4);
+    if(frame == 68) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\x13\x05미사일피하기에 비매너 미사일같은것은 존재하지 않습니다.\r\n\r\n\x13\x07미사일 피하기\r\n\r\n\x13\x03Created by \x04Factoria\r\n\r\n\x13\x03Cafe \x04http://cafe.naver.com/missilewarfare.cafe\r\n\r\n\x13\x02Clan : Missile fam-\r\n", 4);
+    if(frame == 70) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\x13\x02미사일피하기에 비매너 미사일같은것은 존재하지 않습니다.\r\n\r\n\x13\x07미사일 피하기\r\n\r\n\x13\x03Created by \x04Factoria\r\n\r\n\x13\x03Cafe \x04http://cafe.naver.com/missilewarfare.cafe\r\n\r\n\x13\x1FClan : Missile fam-\r\n", 4);
+    if(frame == 72) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\x13\x03미사일피하기에 비매너 미사일같은것은 존재하지 않습니다.\r\n\r\n\x13\x07미사일 피하기\r\n\r\n\x13\x03Created by \x04Factoria\r\n\r\n\x13\x03Cafe \x04http://cafe.naver.com/missilewarfare.cafe\r\n\r\n\x13\x1FClan : Missile fam-\r\n", 4);
+
+    if(frame == 144) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\x13\x02미사일피하기에 비매너 미사일같은것은 존재하지 않습니다.\r\n\r\n\x13\x02미사일 피하기\r\n\r\n\x13\x02Created by Factoria\r\n\r\n\x13\x02Cafe http://cafe.naver.com/missilewarfare.cafe\r\n\r\n\x13\x02Clan : Missile fam-\r\n", 4);
+    if(frame == 146) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\x13\x05미사일피하기에 비매너 미사일같은것은 존재하지 않습니다.\r\n\r\n\x13\x05미사일 피하기\r\n\r\n\x13\x05Created by Factoria\r\n\r\n\x13\x05Cafe http://cafe.naver.com/missilewarfare.cafe\r\n\r\n\x13\x05Clan : Missile fam-\r\n", 4);
+    if(frame == 148) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n", 4);
+    SetCurrentPlayer(oldcp);
+}
