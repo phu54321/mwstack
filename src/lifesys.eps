@@ -71,7 +71,7 @@ function lifeSysLoop() {
     foreach(ptr, epd : EUDLoopUnit()) {
         const unitType = dwread_epd(epd + (0x64 / 4));
         if(isBuilderUnit(unitType)) {
-            const player = dwbreak(dwread_epd(epd + 0x4C))[[2]];
+            const player = dwbreak(dwread_epd(epd + 0x4C / 4))[[2]];
             const opponentPlayer = ($P1 <= player && player <= $P3) ? $P8 : $P7;
             
             const position = dwread_epd(epd + (0x28 / 4));

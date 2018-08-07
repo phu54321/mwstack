@@ -7,14 +7,14 @@ import patterns.stage;
 
 function onPluginStart() {
     lifesys.initLifeSys();
-    patternbase.addPattern(stage.f_impl);
+    // patternbase.addPattern(stage.f_impl);
 }
 
 
 function afterTriggerExec() {
     SetInvincibility(Enable, '(any unit)', AllPlayers, 'Anywhere');
 
-    patternbase.loopPatterns();
+    // patternbase.loopPatterns();
     intro.introLoop();
     lifesys.lifeSysLoop();
 }
