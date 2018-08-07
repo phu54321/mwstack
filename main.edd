@@ -3,10 +3,6 @@ input: basemap.scx
 output: Missile Warfare 1.00S.scx
 
 
-[freeze]
-mpaq: 1
-
-
 # 맵을 테스트할때 그 방에 제작자가 있는지 체크합니다.
 [authorCheck]
 username: cpy3001
