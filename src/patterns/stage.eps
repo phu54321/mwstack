@@ -4,7 +4,7 @@ import patterns.common;
 function impl(p: patternbase.Pattern) {
     for(var i = 0 ; i < 11 ; i++) {
         if(p.timer == 36 * i) {
-            common.createHMissile(p, 'Fast Missile', 5);
+            common.createVMissile(p, 'Fast Missile', i + 1);
         }
     }
     if(p.timer == 36 * 11) return 0;
