@@ -1,4 +1,4 @@
-import patterns.locSetting as locSetting
+import locSetting as locSetting
 from eudplib import *
 
 @EUDFunc

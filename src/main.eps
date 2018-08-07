@@ -1,9 +1,9 @@
 import intro;
 import location as loc;
 import lifesys;
-import patterns.patternbase;
-import patterns.stage;
-import patterns.moveloop;
+import patternbase;
+import moveloop;
+import shootsys;
 
 function onPluginStart() {
     lifesys.initLifeSys();
@@ -14,18 +14,9 @@ function afterTriggerExec() {
     SetInvincibility(Enable, '(any unit)', AllPlayers, 'Anywhere');
     SetResources(AllPlayers, SetTo, 5000, Ore);
 
-    if(Bring(P1, AtLeast, 1, "Terran Supply Depot", "Anywhere")) {
-        patternbase.addPattern(P1, stage.f_impl);
-        RemoveUnitAt(1, "Terran Supply Depot", 'Anywhere', P1);
-    }
-
-    if(Bring(P4, AtLeast, 1, "Terran Supply Depot", "Anywhere")) {
-        patternbase.addPattern(P4, stage.f_impl);
-        RemoveUnitAt(1, "Terran Supply Depot", 'Anywhere', P4);
-    }
-
     patternbase.loopPatterns();
     intro.introLoop();
     lifesys.lifeSysLoop();
     moveloop.moveLoop();
+    shootsys.shootLoop();
 }
