@@ -7,14 +7,20 @@ import patterns.stage;
 
 function onPluginStart() {
     lifesys.initLifeSys();
-    // patternbase.addPattern(stage.f_impl);
+    patternbase.addPattern(stage.f_impl);
 }
 
 
 function afterTriggerExec() {
     SetInvincibility(Enable, '(any unit)', AllPlayers, 'Anywhere');
+    SetResources(AllPlayers, SetTo, 5000, Ore);
 
-    // patternbase.loopPatterns();
+    if(Bring(P1, AtLeast, 1, "Terran Supply Depot", "Anywhere")) {
+        patternbase.addPattern(stage.f_impl);
+        RemoveUnit("Terran Supply Depot", P1);
+    }
+
+    patternbase.loopPatterns();
     intro.introLoop();
     lifesys.lifeSysLoop();
 }

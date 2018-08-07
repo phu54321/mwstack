@@ -1,8 +1,0 @@
-function pxMoveLocation(x, y) {
-    const locid = $L('pxmove');
-    const locationEPD = EPD(0x58DC60) + locid * 5;
-    SetMemoryEPD(locationEPD + 0, SetTo, x);
-    SetMemoryEPD(locationEPD + 1, SetTo, y);
-    SetMemoryEPD(locationEPD + 2, SetTo, x);
-    SetMemoryEPD(locationEPD + 3, SetTo, y);
-}
