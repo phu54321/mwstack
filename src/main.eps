@@ -16,7 +16,12 @@ function afterTriggerExec() {
 
     if(Bring(P1, AtLeast, 1, "Terran Supply Depot", "Anywhere")) {
         patternbase.addPattern(P1, stage.f_impl);
-        RemoveUnit("Terran Supply Depot", P1);
+        RemoveUnitAt(1, "Terran Supply Depot", 'Anywhere', P1);
+    }
+
+    if(Bring(P4, AtLeast, 1, "Terran Supply Depot", "Anywhere")) {
+        patternbase.addPattern(P4, stage.f_impl);
+        RemoveUnitAt(1, "Terran Supply Depot", 'Anywhere', P4);
     }
 
     patternbase.loopPatterns();

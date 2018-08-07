@@ -1,14 +1,31 @@
 import patterns.patternbase;
 import patterns.locSetting;
 
-function createVMissile(p: patternbase.Pattern, unit: TrgUnit, col) {
-    const location = locSetting.vFromArray[col - 1];
-
-    CreateUnit(1, unit, location, p.forcePlayer);
+function getNextGeneratedUnit() {
+    var ptr, epd = dwepdread_epd(EPD(0x628438));
+    if(ptr == 0) epd = 0;
+    return epd;
 }
 
-function createHMissile(p: patternbase.Pattern, unit: TrgUnit, reow) {
-    const location = locSetting.vToArray[reow - 1];
 
+function makeUnitStackable(epd) {
+    dwwrite_epd(
+        epd + (0xDC / 4),
+        dwread_epd(epd + (0xDC / 4)) | 0x200000
+        );
+}
+
+
+function createVMissile(p: patternbase.Pattern, unit: TrgUnit, col) {
+    const location = locSetting.vFromArray[col - 1];
+    const epd = getNextGeneratedUnit();
     CreateUnit(1, unit, location, p.forcePlayer);
+    makeUnitStackable(epd);
+}
+
+function createHMissile(p: patternbase.Pattern, unit: TrgUnit, row) {
+    const location = locSetting.vToArray[row - 1];
+    const epd = getNextGeneratedUnit();
+    CreateUnit(1, unit, location, p.forcePlayer);
+    makeUnitStackable(epd);
 }

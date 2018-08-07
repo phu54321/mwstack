@@ -51,34 +51,40 @@ function forceFromPlayer(player: TrgPlayer) {
 }
 
 function setMissileLocations(force: TrgPlayer) {
-    const f1vx, f1vy = loc.getTopLeft('f1field');
-    const f2vx, f2vy = loc.getTopLeft('f2field');
-    const vxStart = f1vx;
+    const f1x, f1y = loc.getTopLeft('f1field');
+    const f2x, f2y = loc.getTopLeft('f2field');
+    const vxStart = f1x;
     const hFromX = vxStart - 64 * 2;
     const hToX = vxStart + 64 * 12;
 
     if (force == $P7) {
-        const fromY = f1vy + 64 * 2;
-        const toY = f2vy + 64 * 6;
+        loc.pxMoveLocation('allyField', f1x, f1y, 64 * 11, 64 * 5);
+        loc.pxMoveLocation('opponentField', f2x, f2y, 64 * 11, 64 * 5);
+
+        const fromY = f1y + 64 * 2;
+        const toY = f2y + 64 * 6;
         for(var x = 0 ; x < 11 ; x++ ) {
             loc.pxMoveLocation(vFromArray[x], vxStart + 64 * x, fromY, 64, 64);
             loc.pxMoveLocation(vToArray[x],  vxStart + 64 * x, toY, 64, 64);
         }
         for(var y = 0 ; y < 5 ; y++) {
-            loc.pxMoveLocation(hFromArray[y], hFromX, f2vy + 4 * y, 64, 64);
-            loc.pxMoveLocation(hToArray[y], hToX, f2vy + 4 * y, 64, 64);
+            loc.pxMoveLocation(hFromArray[y], hFromX, f2y + 4 * y, 64, 64);
+            loc.pxMoveLocation(hToArray[y], hToX, f2y + 4 * y, 64, 64);
         }
     } else {
-        const fromY = f2vy + 64 * 2;
-        const toY = f1vy - 64 * 2;
+        loc.pxMoveLocation('allyField', f2x, f2y, 64 * 11, 64 * 5);
+        loc.pxMoveLocation('opponentField', f1x, f1y, 64 * 11, 64 * 5);
+
+        const fromY = f2y + 64 * 2;
+        const toY = f1y - 64 * 2;
 
         for(var x = 0 ; x < 11 ; x++ ) {
             loc.pxMoveLocation(vFromArray[x], vxStart + 64 * x, fromY, 64, 64);
             loc.pxMoveLocation(vToArray[x],  vxStart + 64 * x, toY, 64, 64);
         }
         for(var y = 0 ; y < 5 ; y++) {
-            loc.pxMoveLocation(hFromArray[y], hFromX, f1vy + 4 * y, 64, 64);
-            loc.pxMoveLocation(hToArray[y], hToX, f1vy + 4 * y, 64, 64);
+            loc.pxMoveLocation(hFromArray[y], hFromX, f1y + 4 * y, 64, 64);
+            loc.pxMoveLocation(hToArray[y], hToX, f1y + 4 * y, 64, 64);
         }
     }
 }
