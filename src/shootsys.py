@@ -1,13 +1,20 @@
 from eudplib import *
 import locSetting
 import patternbase
-from patterns import stage
 import location
+
+from patterns import (
+    stage,
+    center,
+)
+
+unitPatternMap = {
+    'Stage Missile [N]': stage,
+    'Center Missile [N]': center,
+}
 
 @EUDFunc
 def f_shootLoop():
-    unit = 'Slow Missile [B]'
-
     for p in EUDLoopRange(6):
         if EUDIfNot()(f_playerexist(p)):
             EUDContinue()
@@ -21,7 +28,9 @@ def f_shootLoop():
             for y in EUDLoopRange(10):
                 location.f_pxMoveLocation('pxmove', allyFieldX + 32 * x, allyFieldY + 32 * y, 32, 32)
                 DoActions(MoveLocation('pxmove', 'Map Revealer', P12, 'pxmove'))
-                if EUDIf()(Bring(p, AtLeast, 1, unit, "pxmove")):
-                    patternbase.f_addPattern(p, stage.f_impl)
-                    DoActions(RemoveUnitAt(1, unit, 'pxmove', p))
-                EUDEndIf()
+
+                for unit, handlerModule in unitPatternMap.items():
+                    if EUDIf()(Bring(p, AtLeast, 1, unit, "pxmove")):
+                        patternbase.f_addPattern(p, x, y, handlerModule.f_impl)
+                        DoActions(RemoveUnitAt(1, unit, 'pxmove', p))
+                    EUDEndIf()

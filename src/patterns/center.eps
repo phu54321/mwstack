@@ -1,0 +1,15 @@
+import patternbase;
+import patterns.common;
+
+function impl(p: patternbase.Pattern) {
+    SetCurrentPlayer(P1);
+    if(p.timer == 0) common.createVMissile(p, 'Fast Missile', 6);
+    for(var i = 1 ; i <= 5 ; i++) {
+        if(p.timer == 36 * i) {
+            common.createVMissile(p, 'Fast Missile', 6 - i);
+            common.createVMissile(p, 'Fast Missile', 6 + i);
+        }
+    }
+    if(p.timer == 36 * 6) return 0;
+    return 1;
+}

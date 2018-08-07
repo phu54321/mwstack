@@ -4,10 +4,10 @@ import patterns.common;
 function impl(p: patternbase.Pattern) {
     SetCurrentPlayer(P1);
     for(var i = 0 ; i < 11 ; i++) {
-        if(p.timer == 24 * i) {
+        if(p.timer == 36 * i) {
             common.createVMissile(p, 'Fast Missile', i + 1);
         }
     }
-    if(p.timer == 24 * 11) return 0;
+    if(p.timer == 36 * 11) return 0;
     return 1;
 }

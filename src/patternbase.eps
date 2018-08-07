@@ -3,6 +3,7 @@ import locSetting;
 object Pattern {
     var prev: selftype, next: selftype;
     var timer;
+    var x, y;
     var player;
     var forcePlayer;
     var callback: EUDFuncPtr(1, 1);
@@ -11,10 +12,11 @@ object Pattern {
 
 var patternHead, patternTail = 0, 0;
 
-function addPattern(player: TrgPlayer, callback: EUDFuncPtr(1, 1)) {
+function addPattern(player: TrgPlayer, x, y, callback: EUDFuncPtr(1, 1)) {
     const p = Pattern.alloc();
     p.callback = callback;
     p.timer = 0;
+    p.x, p.y = x, y;
     p.player = player;
     p.forcePlayer = locSetting.forceFromPlayer(player);
 
