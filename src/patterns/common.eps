@@ -24,7 +24,7 @@ function createVMissile(p: patternbase.Pattern, unit: TrgUnit, col) {
 }
 
 function createHMissile(p: patternbase.Pattern, unit: TrgUnit, row) {
-    const location = locSetting.vToArray[row - 1];
+    const location = locSetting.hFromArray[row - 1];
     const epd = getNextGeneratedUnit();
     CreateUnit(1, unit, location, p.forcePlayer);
     makeUnitStackable(epd);

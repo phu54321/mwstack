@@ -13,3 +13,10 @@ def f_moveLoop():
                 ]
                 for x in range(11)
             ])
+            DoActions([
+                [
+                    Order(unit, cPlayer, locSetting.hFromArray[y], Move, locSetting.hToArray[y]),
+                    KillUnitAt(All, unit, locSetting.hToArray[y], cPlayer)
+                ]
+                for y in range(5)
+            ])

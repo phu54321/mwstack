@@ -6,11 +6,15 @@ import location
 from patterns import (
     stage,
     center,
+    sidecenter,
+    sidestage,
 )
 
 unitPatternMap = {
     'Stage Missile [N]': stage,
     'Center Missile [N]': center,
+    'Side Center Missile [N]': sidecenter,
+    'Side Stage Missile [N]': sidestage,
 }
 
 @EUDFunc

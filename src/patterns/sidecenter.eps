@@ -1,0 +1,14 @@
+import patternbase;
+import patterns.common;
+
+function impl(p: patternbase.Pattern) {
+    if(p.timer == 0) common.createHMissile(p, 'Missile', 3);
+    for(var i = 1 ; i <= 2 ; i++) {
+        if(p.timer == 36 * i) {
+            common.createHMissile(p, 'Missile', 3 - i);
+            common.createHMissile(p, 'Missile', 3 + i);
+        }
+    }
+    if(p.timer == 36 * 3) return 0;
+    return 1;
+}

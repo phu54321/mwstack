@@ -2,11 +2,11 @@ import patternbase;
 import patterns.common;
 
 function impl(p: patternbase.Pattern) {
-    for(var i = 0 ; i < 11 ; i++) {
+    for(var i = 0 ; i < 5 ; i++) {
         if(p.timer == 36 * i) {
-            common.createHMissile(p, 'Fast Missile', 5);
+            common.createVMissile(p, 'Missile', i + 1);
         }
     }
-    if(p.timer == 36 * 11) return 0;
+    if(p.timer == 36 * 5) return 0;
     return 1;
 }

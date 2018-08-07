@@ -68,8 +68,8 @@ function setMissileLocations(force: TrgPlayer) {
             loc.pxMoveLocation(vToArray[x],  vxStart + 64 * x, toY, 64, 64);
         }
         for(var y = 0 ; y < 5 ; y++) {
-            loc.pxMoveLocation(hFromArray[y], hFromX, f2y + 4 * y, 64, 64);
-            loc.pxMoveLocation(hToArray[y], hToX, f2y + 4 * y, 64, 64);
+            loc.pxMoveLocation(hFromArray[y], hFromX, f2y + 64 * y, 64, 64);
+            loc.pxMoveLocation(hToArray[y], hToX, f2y + 64 * y, 64, 64);
         }
     } else {
         loc.pxMoveLocation('allyField', f2x, f2y, 64 * 11, 64 * 5);
@@ -83,8 +83,8 @@ function setMissileLocations(force: TrgPlayer) {
             loc.pxMoveLocation(vToArray[x],  vxStart + 64 * x, toY, 64, 64);
         }
         for(var y = 0 ; y < 5 ; y++) {
-            loc.pxMoveLocation(hFromArray[y], hFromX, f1y + 4 * y, 64, 64);
-            loc.pxMoveLocation(hToArray[y], hToX, f1y + 4 * y, 64, 64);
+            loc.pxMoveLocation(hFromArray[4 - y], hFromX, f1y + 64 * y, 64, 64);
+            loc.pxMoveLocation(hToArray[4 - y], hToX, f1y + 64 * y, 64, 64);
         }
     }
 }
