@@ -25,7 +25,7 @@ unitPatternMap = {
     'Fast Missile [N]': single.f_fast_impl,
     'Refractor [N]': single.f_refractor_impl,
     'Trap [N]': trap.f_impl,
-    'Phosphorus Bomb [N]': soy.f_soy_start,
+    'Phosphorus Bomb [N]': soy.f_soy_impl,
 }
 
 @EUDFunc

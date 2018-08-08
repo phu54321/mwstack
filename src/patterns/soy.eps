@@ -2,74 +2,21 @@ import patternbase;
 import patterns.common;
 import location as loc;
 
-function soy_impl1(p: patternbase.Pattern);
-function soy_impl2(p: patternbase.Pattern);
-function soy_impl3(p: patternbase.Pattern);
-
-function soy_start(p: patternbase.Pattern) {
+function soy_impl(p: patternbase.Pattern) {
     const afX, afY = loc.getTopLeft('allyField');
     const msX, msY = afX + 32 * p.x + 48, afY + 32 * p.y + 32;
-    patternbase.addPattern(p.player, msX, msY, f_soy_impl1);
-    patternbase.addPattern(p.player, msX, msY, f_soy_impl1);
-    return 0;
-}
+    // const angleBase = ((p.forcePlayer == $P7) ? 40 : 220) + rand() % 60;
 
-function soy_impl1(p: patternbase.Pattern) {
-    if(p.timer == 0) {
+    for(var i = 0 ; i < 60 ; i++) {
         const epd = common.getNextGeneratedUnit();
-        loc.pxMoveLocationDot('pxmove', p.x, p.y);
+        loc.pxMoveLocationDot('pxmove', msX, msY);
         CreateUnit(1, 'Sniping Missile', 'pxmove', p.forcePlayer);
         common.makeUnitStackable(epd);
-        const angleBase = (p.forcePlayer == $P7) ? 40 : 220;
-        const dx, dy = lengthdir(32 * 20, angleBase + rand() % 100);
-        common.orderBullet(epd, p.x + dx, p.y + dy);
-        p.data = epd;
+        
+        const dx, dy = lengthdir(32 * 20, i * 6);
+        const dstX, dstY = common.getInfiniteVectorEnd(msX, msY, dx, dy);
+        common.orderBullet(epd, dstX, dstY);
     }
 
-    if(p.timer == 48) {
-        const epd = p.data;
-        const ux, uy = common.getBulletPos(epd);
-        patternbase.addPattern(p.player, ux, uy, f_soy_impl2);
-        patternbase.addPattern(p.player, ux, uy, f_soy_impl2);
-        common.killBullet(epd);
-        return 0;
-    }
-    return 1;
-}
-
-function soy_impl2(p: patternbase.Pattern) {
-    if(p.timer == 0) {
-        const epd = common.getNextGeneratedUnit();
-        loc.pxMoveLocationDot('pxmove', p.x, p.y);
-        CreateUnit(1, 'Sniping Missile', 'pxmove', p.forcePlayer);
-        common.makeUnitStackable(epd);
-        const angleBase = (p.forcePlayer == $P7) ? 40 : 220;
-        const dx, dy = lengthdir(32 * 20, angleBase + rand() % 100);
-        common.orderBullet(epd, p.x + dx, p.y + dy);
-        p.data = epd;
-    }
-
-    if(p.timer == 48) {
-        const epd = p.data;
-        const ux, uy = common.getBulletPos(epd);
-        patternbase.addPattern(p.player, ux, uy, f_soy_impl3);
-        patternbase.addPattern(p.player, ux, uy, f_soy_impl3);
-        common.killBullet(epd);
-        return 0;
-    }
-    return 1;
-}
-
-function soy_impl3(p: patternbase.Pattern) {
-    const epd = common.getNextGeneratedUnit();
-    loc.pxMoveLocationDot('pxmove', p.x, p.y);
-    CreateUnit(1, 'Sniping Missile', 'pxmove', p.forcePlayer);
-    common.makeUnitStackable(epd);
-
-    const angleBase = (p.forcePlayer == $P7) ? 40 : 220;
-    const dx, dy = lengthdir(32 * 20, angleBase + rand() % 100);
-    const dstX, dstY = common.getInfiniteVectorEnd(p.x, p.y, dx, dy);
-    common.orderBullet(epd, dstX, dstY);
-    p.data = epd;
     return 0;
 }
