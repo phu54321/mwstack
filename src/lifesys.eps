@@ -2,7 +2,7 @@ import intro;
 import location as loc;
 
 const playerReviveTimer = EUDArray(6);
-const reviveTime = 1000;
+const reviveTime = 24 * 5;
 
 
 function isPlayerAlive(p: TrgPlayer) {
@@ -28,12 +28,13 @@ function lifeSysLoop() {
     // 리바이브 시스템
     //  - 가스 : 리바이브 카운터
     for(var player = 0 ; player < 6 ; player++) {
-        if(playerexist(player) && Bring(player, Exactly, 0, 'Builder', 'Anywhere')) {
+        if(!playerexist(player)) continue;
+        const playerForce = ($P1 <= player && player <= $P3) ? $Force1 : $Force2;
+        if(Bring(player, Exactly, 0, 'Builder', 'Anywhere')) {
             SetResources(player, Subtract, 5, Ore);
-            SetResources(player, Subtract, 3, Gas);  // 리바이브 카운터 감소
+            SetResources(player, Subtract, 1, Gas);  // 리바이브 카운터 감소
 
             if(Accumulate(player, Exactly, 0, Gas)) {
-                const playerForce = ($P1 <= player && player <= $P3) ? $Force1 : $Force2;
                 if(Score(playerForce, Custom, AtLeast, 200)) {
                     // 생존점수를 소모해 부활
                     SetScore(playerForce, Subtract, 200, Custom);
@@ -63,7 +64,8 @@ function lifeSysLoop() {
                 DisplayText("\x16무적 타이머가 끝났습니다.");
             }
             SetResources(player, Subtract, 1, Gas);  // 무적타이머
-            SetResources(player, Add, 10 - prevOre / 200, Ore);  // 돈벌자~
+            const multiplier = Score(playerForce, Custom, Exactly, 0) ? 2 : 1;
+            SetResources(player, Add, multiplier * (10 - prevOre / 200), Ore);  // 돈벌자~
             if(Accumulate(player, AtLeast, 2000, Ore)) {
                 SetResources(player, SetTo, 2000, Ore);
             }
