@@ -58,3 +58,7 @@ target/
 # epscript
 __epspy__
 reference/
+
+Scm*.tmp
+*.epmap
+*.epmap.prof
