@@ -6,7 +6,7 @@ const reviveTime = 1000;
 
 
 function isPlayerAlive(p: TrgPlayer) {
-    return playerexist(p) && Accumulate(p, Exactly, 0, Gas);
+    return playerexist(p) && Bring(p, AtLeast, 1, 'Builder', 'Anywhere');
 }
 
 
@@ -28,7 +28,7 @@ function lifeSysLoop() {
     // 리바이브 시스템
     //  - 가스 : 리바이브 카운터
     for(var player = 0 ; player < 6 ; player++) {
-        if(playerexist(player) && Accumulate(player, AtLeast, 1, Gas)) {
+        if(playerexist(player) && Bring(player, Exactly, 0, 'Builder', 'Anywhere')) {
             SetResources(player, Subtract, 5, Ore);
             SetResources(player, Subtract, 3, Gas);  // 리바이브 카운터 감소
 
@@ -39,8 +39,9 @@ function lifeSysLoop() {
                     SetScore(playerForce, Subtract, 200, Custom);
                     SetCurrentPlayer(player);
                     PlayWAV("staredit\\wav\\Notice.wav");
-                    DisplayText("\x16부품 수리가 완료되었습니다. 부활후3초간 무적상태를 유지합니다.");
+                    DisplayText("\x16부품 수리가 완료되었습니다. 부활후 3초간 무적상태를 유지합니다.");
                     CreateUnit(1, "Builder", playerForce == $Force1 ? $L('f1field') + 1 : $L('f2field') + 1, player);
+                    SetResources(player, SetTo, 72, Gas);
                 }
                 else {
                     // 생존점수 부족 → 리바이브 불가.
@@ -56,6 +57,12 @@ function lifeSysLoop() {
         }
         else {
             const prevOre = dwread_epd(EPD(0x57F0F0) + player);
+            if(Accumulate(player, Exactly, 1, Gas)) {
+                SetCurrentPlayer(player);
+                PlayWAV("staredit\\wav\\Notice.wav");
+                DisplayText("\x16무적 타이머가 끝났습니다.");
+            }
+            SetResources(player, Subtract, 1, Gas);  // 무적타이머
             SetResources(player, Add, 10 - prevOre / 200, Ore);  // 돈벌자~
             if(Accumulate(player, AtLeast, 2000, Ore)) {
                 SetResources(player, SetTo, 2000, Ore);

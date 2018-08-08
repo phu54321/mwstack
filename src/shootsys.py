@@ -11,7 +11,8 @@ from patterns import (
     single,
     moveto,
     trap,
-    soy
+    soy,
+    blocker
 )
 
 unitPatternMap = {
@@ -26,6 +27,7 @@ unitPatternMap = {
     'Refractor [N]': single.f_refractor_impl,
     'Trap [N]': trap.f_impl,
     'Phosphorus Bomb [N]': soy.f_soy_impl,
+    'Blocker [N]': blocker.f_impl,
 }
 
 @EUDFunc
@@ -41,11 +43,11 @@ def f_shootLoop():
         allyFieldX, allyFieldY = location.f_getTopLeft('allyField')
         for x in EUDLoopRange(22):
             for y in EUDLoopRange(10):
-                location.f_pxMoveLocation('pxmove', allyFieldX + 32 * x, allyFieldY + 32 * y, 32, 32)
+                location.f_pxMoveLocationDot('pxmove', allyFieldX + 32 * x + 16, allyFieldY + 32 * y + 16)
                 DoActions(MoveLocation('pxmove', 'Map Revealer', P12, 'pxmove'))
 
                 for unit, handlerModule in unitPatternMap.items():
                     if EUDIf()(Bring(p, AtLeast, 1, unit, "pxmove")):
-                        patternbase.f_addPattern(p, x, y, handlerModule)
+                        patternbase.f_addPattern(p + 3, x, y, handlerModule)
                         DoActions(RemoveUnitAt(1, unit, 'pxmove', p))
                     EUDEndIf()

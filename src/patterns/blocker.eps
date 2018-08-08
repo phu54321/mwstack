@@ -1,0 +1,10 @@
+import patternbase;
+import patterns.common;
+import location as loc;
+
+function impl(p: patternbase.Pattern) {
+    const afX, afY = loc.getTopLeft('allyField');
+    if(p.timer % 36 == 0) common.createMissilePx(p, 'Fast Missile', afX + 32 * p.x + 48, afY + 32 * p.y + 32);
+    if(p.timer == 36 * 8) return 0;
+    return 1;
+}

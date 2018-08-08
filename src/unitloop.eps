@@ -17,7 +17,7 @@ function unitLoop() {
         const posX, posY = dwbreak(position)[[0, 1]];
 
         // Life system
-        if(isBuilderUnit(unitType)) {
+        if(isBuilderUnit(unitType) && Accumulate(player, Exactly, 0, Gas)) {
             const opponentPlayer = ($P1 <= player && player <= $P3) ? $P8 : $P7;
             
             loc.pxMoveLocationDot('pxmove', posX, posY);
