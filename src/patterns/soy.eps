@@ -5,15 +5,15 @@ import location as loc;
 function soy_impl(p: patternbase.Pattern) {
     const afX, afY = loc.getTopLeft('allyField');
     const msX, msY = afX + 32 * p.x + 48, afY + 32 * p.y + 32;
-    const angleBase = ((p.forcePlayer == $P7) ? 40 : 220) + rand() % 60;
+    const angleBase = (p.forcePlayer == $P7) ? 50 : 230;
 
-    for(var i = 0 ; i < 20 ; i++) {
+    for(var i = 0 ; i < 10 ; i++) {
         const epd = common.getNextGeneratedUnit();
         loc.pxMoveLocationDot('pxmove', msX, msY);
         CreateUnit(1, 'Sniping Missile', 'pxmove', p.forcePlayer);
         common.makeUnitStackable(epd);
         
-        const dx, dy = lengthdir(32 * 20, angleBase + i * 2);
+        const dx, dy = lengthdir(32 * 20, angleBase + i * 8);
         const dstX, dstY = common.getInfiniteVectorEnd(msX, msY, dx, dy);
         common.orderBullet(epd, dstX, dstY);
     }

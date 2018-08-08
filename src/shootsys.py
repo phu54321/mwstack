@@ -25,6 +25,7 @@ unitPatternMap = {
     'Missile [N]': single.f_missile_impl,
     'Fast Missile [N]': single.f_fast_impl,
     'Refractor [N]': single.f_refractor_impl,
+    'Ore Slot [N]': single.f_ore_slot_impl,
     'Trap [N]': trap.f_impl,
     'Phosphorus Bomb [N]': soy.f_soy_impl,
     'Blocker [N]': blocker.f_impl,
@@ -48,6 +49,9 @@ def f_shootLoop():
 
                 for unit, handlerModule in unitPatternMap.items():
                     if EUDIf()(Bring(p, AtLeast, 1, unit, "pxmove")):
-                        patternbase.f_addPattern(p + 3, x, y, handlerModule)
+                        if unit == 'Move To [N]':
+                            patternbase.f_addPattern(p, x, y, handlerModule)
+                        else:
+                            patternbase.f_addPattern(p + 3, x, y, handlerModule)
                         DoActions(RemoveUnitAt(1, unit, 'pxmove', p))
                     EUDEndIf()

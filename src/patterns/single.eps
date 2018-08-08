@@ -19,3 +19,9 @@ function refractor_impl(p: patternbase.Pattern) {
     common.createMissilePx(p, 'Refractor', afX + 32 * p.x + 48, afY + 32 * p.y + 32);
     return 0;
 }
+
+function ore_slot_impl(p: patternbase.Pattern) {
+    SetCurrentPlayer(p.player);
+    DisplayText('\x16미네랄 저장고가 방전되었습니다.');
+    return 0;
+}
