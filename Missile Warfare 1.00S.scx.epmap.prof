@@ -1,4 +1,550 @@
-[File "C:\Users\Administrator\Documents\Starcraft\Maps\mwstack\src\lifesys.eps"]
+[File "D:\Program Files\Starcraft\maps\mwstack\src\patterns\center.eps"]
+-------------------------------------------------
+
+              import patternbase;
+              import patterns.common;
+              
+              function impl(p: patternbase.Pattern) {
+                  if(p.timer == 0) common.createVMissile(p, 'Fast Missile', 6);
+[      1 ]        for(var i = 1 ; i <= 5 ; i++) {
+[      5 ]            if(p.timer == 36 * i) {
+[      1 ]                common.createVMissile(p, 'Fast Missile', 6 - i);
+                          common.createVMissile(p, 'Fast Missile', 6 + i);
+                      }
+                  }
+                  if(p.timer == 36 * 6) return 0;
+                  return 1;
+              }
+
+
+
+
+[File "D:\Program Files\Starcraft\maps\mwstack\src\patterns\soy.eps"]
+-------------------------------------------------
+
+              import patternbase;
+              import patterns.common;
+              import location as loc;
+              
+              function soy_impl1(p: patternbase.Pattern);
+              function soy_impl2(p: patternbase.Pattern);
+              function soy_impl3(p: patternbase.Pattern);
+              
+              function soy_start(p: patternbase.Pattern) {
+                  const afX, afY = loc.getTopLeft('allyField');
+                  const msX, msY = afX + 32 * p.x + 48, afY + 32 * p.y + 32;
+                  patternbase.addPattern(p.player, msX, msY, f_soy_impl1);
+                  patternbase.addPattern(p.player, msX, msY, f_soy_impl1);
+                  return 0;
+              }
+              
+              function soy_impl1(p: patternbase.Pattern) {
+                  if(p.timer == 0) {
+                      const epd = common.getNextGeneratedUnit();
+                      loc.pxMoveLocationDot('pxmove', p.x, p.y);
+                      CreateUnit(1, 'Sniping Missile', 'pxmove', p.forcePlayer);
+                      common.makeUnitStackable(epd);
+                      const angleBase = (p.forcePlayer == $P7) ? 40 : 220;
+                      const dx, dy = lengthdir(32 * 20, angleBase + rand() % 100);
+                      common.orderBullet(epd, p.x + dx, p.y + dy);
+                      p.data = epd;
+                  }
+              
+[      1 ]        if(p.timer == 48) {
+                      const epd = p.data;
+                      const ux, uy = common.getBulletPos(epd);
+                      patternbase.addPattern(p.player, ux, uy, f_soy_impl2);
+                      patternbase.addPattern(p.player, ux, uy, f_soy_impl2);
+                      common.killBullet(epd);
+                      return 0;
+                  }
+                  return 1;
+              }
+              
+              function soy_impl2(p: patternbase.Pattern) {
+                  if(p.timer == 0) {
+[      1 ]            const epd = common.getNextGeneratedUnit();
+                      loc.pxMoveLocationDot('pxmove', p.x, p.y);
+                      CreateUnit(1, 'Sniping Missile', 'pxmove', p.forcePlayer);
+                      common.makeUnitStackable(epd);
+                      const angleBase = (p.forcePlayer == $P7) ? 40 : 220;
+                      const dx, dy = lengthdir(32 * 20, angleBase + rand() % 100);
+                      common.orderBullet(epd, p.x + dx, p.y + dy);
+                      p.data = epd;
+                  }
+              
+                  if(p.timer == 48) {
+                      const epd = p.data;
+                      const ux, uy = common.getBulletPos(epd);
+                      patternbase.addPattern(p.player, ux, uy, f_soy_impl3);
+                      patternbase.addPattern(p.player, ux, uy, f_soy_impl3);
+                      common.killBullet(epd);
+                      return 0;
+                  }
+                  return 1;
+              }
+              
+              function soy_impl3(p: patternbase.Pattern) {
+                  const epd = common.getNextGeneratedUnit();
+                  loc.pxMoveLocationDot('pxmove', p.x, p.y);
+                  CreateUnit(1, 'Sniping Missile', 'pxmove', p.forcePlayer);
+                  common.makeUnitStackable(epd);
+              
+                  const angleBase = (p.forcePlayer == $P7) ? 40 : 220;
+                  const dx, dy = lengthdir(32 * 20, angleBase + rand() % 100);
+                  const dstX, dstY = common.getInfiniteVectorEnd(p.x, p.y, dx, dy);
+                  common.orderBullet(epd, dstX, dstY);
+                  p.data = epd;
+                  return 0;
+              }
+
+
+
+
+[File "D:\Program Files\Starcraft\maps\mwstack\src\locSetting.eps"]
+-------------------------------------------------
+
+              import location as loc;
+              
+              const vFromArray = [
+                  EncodeLocation('vfrom1'),
+                  EncodeLocation('vfrom2'),
+                  EncodeLocation('vfrom3'),
+                  EncodeLocation('vfrom4'),
+                  EncodeLocation('vfrom5'),
+                  EncodeLocation('vfrom6'),
+                  EncodeLocation('vfrom7'),
+                  EncodeLocation('vfrom8'),
+                  EncodeLocation('vfrom9'),
+                  EncodeLocation('vfrom10'),
+                  EncodeLocation('vfrom11'),
+              ];
+              
+              const vToArray = [
+                  EncodeLocation('vto1'),
+                  EncodeLocation('vto2'),
+                  EncodeLocation('vto3'),
+                  EncodeLocation('vto4'),
+                  EncodeLocation('vto5'),
+                  EncodeLocation('vto6'),
+                  EncodeLocation('vto7'),
+                  EncodeLocation('vto8'),
+                  EncodeLocation('vto9'),
+                  EncodeLocation('vto10'),
+                  EncodeLocation('vto11'),
+              ];
+              
+              
+              const hFromArray = [
+                  EncodeLocation('hfrom1'),
+                  EncodeLocation('hfrom2'),
+                  EncodeLocation('hfrom3'),
+                  EncodeLocation('hfrom4'),
+                  EncodeLocation('hfrom5'),
+              ];
+              
+              const hToArray = [
+                  EncodeLocation('hto1'),
+                  EncodeLocation('hto2'),
+                  EncodeLocation('hto3'),
+                  EncodeLocation('hto4'),
+                  EncodeLocation('hto5'),
+              ];
+              
+              
+              function forceFromPlayer(player: TrgPlayer) {
+                  return (player == $P1 || player == $P2 || player == $P3 || player == $P7) ? $P7 : $P8;
+              }
+              
+              function setMissileLocations(force: TrgPlayer) {
+[      7 ]        const f1x, f1y = loc.getTopLeft('f1field');
+[     13 ]        const f2x, f2y = loc.getTopLeft('f2field');
+                  const vxStart = f1x;
+                  const hFromX = vxStart - 64 * 2;
+                  const hToX = vxStart + 64 * 12;
+              
+                  if (force == $P7) {
+[   1545 ]            loc.pxMoveLocation('allyField', f1x, f1y, 64 * 11, 64 * 5);
+                      loc.pxMoveLocation('opponentField', f2x, f2y, 64 * 11, 64 * 5);
+              
+                      const fromY = f1y;
+                      const toY = f2y + 64 * 6;
+[      1 ]            for(var x = 0 ; x < 11 ; x++ ) {
+[     63 ]                loc.pxMoveLocation(vFromArray[x], vxStart + 64 * x, fromY, 64, 64 * 5);
+[     69 ]                loc.pxMoveLocation(vToArray[x],  vxStart + 64 * x, toY, 64, 64);
+                      }
+                      for(var y = 0 ; y < 5 ; y++) {
+[     37 ]                loc.pxMoveLocation(hFromArray[y], hFromX, f2y + 64 * y, 64, 64);
+[     30 ]                loc.pxMoveLocation(hToArray[y], hToX, f2y + 64 * y, 64, 64);
+                      }
+                  } else {
+[      2 ]            loc.pxMoveLocation('allyField', f2x, f2y, 64 * 11, 64 * 5);
+[      1 ]            loc.pxMoveLocation('opponentField', f1x, f1y, 64 * 11, 64 * 5);
+              
+                      const fromY = f2y;
+                      const toY = f1y - 64 * 2;
+              
+                      for(var x = 0 ; x < 11 ; x++ ) {
+[     14 ]                loc.pxMoveLocation(vFromArray[x], vxStart + 64 * x, fromY, 64, 64 * 5);
+[     19 ]                loc.pxMoveLocation(vToArray[x],  vxStart + 64 * x, toY, 64, 64);
+                      }
+                      for(var y = 0 ; y < 5 ; y++) {
+[      8 ]                loc.pxMoveLocation(hFromArray[4 - y], hFromX, f1y + 64 * y, 64, 64);
+[      6 ]                loc.pxMoveLocation(hToArray[4 - y], hToX, f1y + 64 * y, 64, 64);
+                      }
+                  }
+              }
+
+
+
+
+[File "D:\Program Files\Starcraft\maps\mwstack\src\intro.eps"]
+-------------------------------------------------
+
+              var frame = 0;
+              
+              function introLoop() {
+                  frame++;
+              
+                  const oldcp = getcurpl();
+[      1 ]        SetCurrentPlayer(getuserplayerid());
+                  if(frame == 48) PlayWAV("staredit\\wav\\scan.wav");
+[      1 ]        if(frame == 48) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x05미\r\n\r\n\r\n\r\n\r\n\r\n\r\n", 4);
+[      1 ]        if(frame == 50) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x02미\x05사\r\n\r\n\r\n\r\n\r\n\r\n\r\n", 4);
+[      1 ]        if(frame == 52) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x07미\x02사\x05일\r\n\r\n\r\n\r\n\r\n\r\n\r\n", 4);
+                  if(frame == 54) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x07미사\x02일\x05 \r\n\r\n\r\n\r\n\r\n\r\n\r\n", 4);
+[      1 ]        if(frame == 56) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x07미사일\x02 \x05피\r\n\r\n\r\n\r\n\r\n\r\n\r\n", 4);
+[      1 ]        if(frame == 58) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x07미사일 \x02피\x05하\r\n\r\n\r\n\r\n\r\n\r\n\r\n", 4);
+[      1 ]        if(frame == 60) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x07미사일 피\x02하\x05기\r\n\r\n\r\n\r\n\r\n\r\n\r\n", 4);
+                  if(frame == 62) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x07미사일 피하\x02기\r\n\r\n\x13\x05Created by Factoria\r\n\r\n\r\n\r\n\r\n", 4);
+                  if(frame == 64) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x07미사일 피하기\r\n\r\n\x13\x02Created by Factoria\r\n\r\n\x13\x05Cafe http://cafe.naver.com/missilewarfare.cafe\r\n\r\n\r\n", 4);
+                  if(frame == 66) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\x13\x07미사일 피하기\r\n\r\n\x13\x03Created by \x04Factoria\r\n\r\n\x13\x02Cafe http://cafe.naver.com/missilewarfare.cafe\r\n\r\n\x13\x05Clan : Missile fam-\r\n", 4);
+[     10 ]        if(frame == 68) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\x13\x05미사일피하기에 비매너 미사일같은것은 존재하지 않습니다.\r\n\r\n\x13\x07미사일 피하기\r\n\r\n\x13\x03Created by \x04Factoria\r\n\r\n\x13\x03Cafe \x04http://cafe.naver.com/missilewarfare.cafe\r\n\r\n\x13\x02Clan : Missile fam-\r\n", 4);
+                  if(frame == 70) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\x13\x02미사일피하기에 비매너 미사일같은것은 존재하지 않습니다.\r\n\r\n\x13\x07미사일 피하기\r\n\r\n\x13\x03Created by \x04Factoria\r\n\r\n\x13\x03Cafe \x04http://cafe.naver.com/missilewarfare.cafe\r\n\r\n\x13\x1FClan : Missile fam-\r\n", 4);
+                  if(frame == 72) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\x13\x03미사일피하기에 비매너 미사일같은것은 존재하지 않습니다.\r\n\r\n\x13\x07미사일 피하기\r\n\r\n\x13\x03Created by \x04Factoria\r\n\r\n\x13\x03Cafe \x04http://cafe.naver.com/missilewarfare.cafe\r\n\r\n\x13\x1FClan : Missile fam-\r\n", 4);
+              
+                  if(frame == 144) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\x13\x02미사일피하기에 비매너 미사일같은것은 존재하지 않습니다.\r\n\r\n\x13\x02미사일 피하기\r\n\r\n\x13\x02Created by Factoria\r\n\r\n\x13\x02Cafe http://cafe.naver.com/missilewarfare.cafe\r\n\r\n\x13\x02Clan : Missile fam-\r\n", 4);
+                  if(frame == 146) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\x13\x05미사일피하기에 비매너 미사일같은것은 존재하지 않습니다.\r\n\r\n\x13\x05미사일 피하기\r\n\r\n\x13\x05Created by Factoria\r\n\r\n\x13\x05Cafe http://cafe.naver.com/missilewarfare.cafe\r\n\r\n\x13\x05Clan : Missile fam-\r\n", 4);
+                  if(frame == 148) DisplayText("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n", 4);
+                  SetCurrentPlayer(oldcp);
+              }
+
+
+
+
+[File "D:\Program Files\Starcraft\maps\mwstack\src\unitloop.eps"]
+-------------------------------------------------
+
+              import location as loc;
+              import lifesys;
+              
+              function isBuilderUnit(u: TrgUnit) {
+[      3 ]        return (
+                      u == $U("Basic Builder") ||
+                      u == $U("Builder") ||
+                      u == $U("Ultimate Builder")
+                  ) ? 1 : 0;
+              }
+              
+              function unitLoop() {
+                  foreach(ptr, epd : EUDLoopUnit()) {
+[     36 ]            const unitType = dwread_epd(epd + (0x64 / 4));
+[     45 ]            const player = dwbreak(dwread_epd(epd + 0x4C / 4))[[2]];
+[     28 ]            const position = dwread_epd(epd + (0x28 / 4));
+[     14 ]            const posX, posY = dwbreak(position)[[0, 1]];
+              
+                      // Life system
+[     45 ]            if(isBuilderUnit(unitType)) {
+                          const opponentPlayer = ($P1 <= player && player <= $P3) ? $P8 : $P7;
+                          
+[      1 ]                loc.pxMoveLocationDot('pxmove', posX, posY);
+                          MoveLocation('ptrace', 'Map Revealer', P12, 'pxmove');
+              
+[      3 ]                if(Bring(opponentPlayer, AtLeast, 1, '(men)', 'ptrace')) {
+                              KillUnitAt(All, '(any unit)', 'field', player);
+                              KillUnitAt(1, '(men)', 'ptrace', opponentPlayer);
+                              SetCurrentPlayer(player);
+                              DisplayText("\x16적의 미사일이 명중하였습니다.\r\n\r\n\x16부품이 수리될때까지 기다려주세요.");
+                              SetResources(player, SetTo, lifesys.reviveTime, Gas);
+                          }
+                      }
+                  }
+              }
+
+
+
+
+[File "D:\Program Files\Starcraft\maps\mwstack\src\main.eps"]
+-------------------------------------------------
+
+              import intro;
+              import location as loc;
+              import lifesys;
+              import patternbase;
+              import moveloop;
+              import shootsys;
+              import unitloop;
+              
+              function onPluginStart() {
+                  lifesys.initLifeSys();
+              
+                  // EUD Editor: disable need of pylon for all buildings
+                  SetMemory(0x6642EC, Subtract, 524288);
+                  SetMemory(0x6642FC, Subtract, 524288);
+                  SetMemory(0x664300, Subtract, 524288);
+                  SetMemory(0x664308, Subtract, 524288);
+                  SetMemory(0x66430C, Subtract, 524288);
+                  SetMemory(0x664310, Subtract, 524288);
+                  SetMemory(0x664314, Subtract, 524288);
+                  SetMemory(0x664318, Subtract, 524288);
+                  SetMemory(0x66431C, Subtract, 524288);
+                  SetMemory(0x664324, Subtract, 524288);
+                  SetMemory(0x664328, Subtract, 524288);
+                  SetMemory(0x66432C, Subtract, 524288);
+                  SetMemory(0x664330, Subtract, 524288);
+              }
+              
+              
+              function afterTriggerExec() {
+                  SetInvincibility(Enable, '(any unit)', AllPlayers, 'Anywhere');
+[      1 ]        SetResources(AllPlayers, SetTo, 5000, Ore);
+              
+[   1689 ]        patternbase.loopPatterns();
+[     18 ]        intro.introLoop();
+[      8 ]        lifesys.lifeSysLoop();
+[    175 ]        unitloop.unitLoop();
+[    275 ]        moveloop.moveLoop();
+[    367 ]        shootsys.shootLoop();
+              }
+
+
+
+
+[File "D:\Program Files\Starcraft\maps\mwstack\src\patterns\common.eps"]
+-------------------------------------------------
+
+              import patternbase;
+              import locSetting;
+              import location as loc;
+              
+              function getNextGeneratedUnit() {
+[      2 ]        var unitptr, unitepd = dwepdread_epd(EPD(0x628438));
+                  if(unitptr == 0) unitepd = 0;
+                  return unitepd;
+              }
+              
+              
+              function makeUnitStackable(unitepd) {
+                  dwwrite_epd(
+                      unitepd + (0xDC / 4),
+                      dwread_epd(unitepd + (0xDC / 4)) | 0x200000
+                  );
+              }
+              
+              
+              // Bullet utilities
+              
+              function getBulletOwner(unitepd) {
+                  return dwbreak(dwread_epd(unitepd + 0x4C / 4))[[2]];
+              }
+              
+              
+              function getBulletVelocity(unitepd) {
+                  // 0x040: point         current_speed;
+                  return
+                      dwread_epd(unitepd + (0x40 / 4) + 0),
+                      dwread_epd(unitepd + (0x40 / 4) + 1);
+              }
+              
+              function getBulletPos(unitepd) {
+                  return dwbreak(dwread_epd(unitepd + (0x28 / 4)))[[0, 1]];
+              }
+              
+              
+              function getInfiniteVectorEnd(x, y, dx, dy) {
+                  const mapSize = 32 * 64;
+              
+                  // Get time to arrive at the vertical edge of the map
+                  var timeX, timeY;
+                  if(dx >= 0x80000000) timeX = 2048 * x / -dx;
+                  else timeX = 2048 * (mapSize - x) / dx;
+                  if(dy >= 0x80000000) timeY = 2048 * y / -dy;
+                  else timeY = 2048 * (mapSize - y) / dy;
+              
+                  // Get time for the missile to get to the edge
+                  var time;  // min(timeX, timeY)
+                  if(dx == 0) time = timeY;
+                  else if(dy == 0) time = timeX;
+                  else if(timeX <= timeY) time = timeX;
+                  else time = timeY;
+              
+                  // Calculate final position
+                  var dstx, dsty;
+                  if(dx >= 0x80000000) dstx = x - (-dx * time / 2048);
+                  else dstx = x + (dx * time / 2048);
+                  if(dy >= 0x80000000) dsty = y - (-dy * time / 2048);
+                  else dsty = y + (dy * time / 2048);
+                  return dstx, dsty;  // 여러개 값 반환도 되요!
+              }
+              
+              
+              function orderBullet(unitepd, dx, dy) {
+                  if(unitepd) {
+                      // /*0x04D*/ u8            orderID;
+                      // /*0x04E*/ u8            orderState;
+                      SetMemoryEPD(unitepd + (0x4C / 4), SetTo, getBulletOwner(unitepd) + 0x00000600);
+              
+                      // /*0x050*/ u16           orderUnitType;
+                      SetMemoryEPD(unitepd + (0x50 / 4), SetTo, 228);
+              
+                      // /*0x058*/ Target    orderTarget;
+                      SetMemoryEPD(unitepd + (0x58 / 4), SetTo, dy * 0x10000 + dx);
+                      SetMemoryEPD(unitepd + (0x5C / 4), SetTo, 0);
+                  }
+              }
+              
+              
+              
+              function killBullet(unitepd) {
+                  if(unitepd) {
+                      SetMemoryEPD(unitepd + (0x4C / 4), SetTo, getBulletOwner(unitepd));  // Set orderID to 0
+                  }
+              }
+              
+              
+              function orderAngle(unitepd, angle) {
+                  if(unitepd) {
+                      const srcx, srcy = dwbreak(dwread_epd(unitepd + (0x28 / 4)))[[0, 1]];
+                      const dx, dy = lengthdir(1024, angle);
+                      const dstx, dsty = getInfiniteVectorEnd(srcx, srcy, dx, dy);
+                      orderBullet(unitepd, dstx, dsty);
+                  }
+              }
+              
+              /////
+              
+              function createMissilePx(p: patternbase.Pattern, unit: TrgUnit, x, y) {
+                  loc.pxMoveLocationDot('pxmove', x, y);
+                  const epd = getNextGeneratedUnit();
+                  CreateUnit(1, unit, 'pxmove', p.forcePlayer);
+                  makeUnitStackable(epd);
+              }
+              
+              function createVMissile(p: patternbase.Pattern, unit: TrgUnit, col) {
+                  const location = locSetting.vFromArray[col - 1];
+[      1 ]        const epd = getNextGeneratedUnit();
+                  CreateUnit(1, unit, location, p.forcePlayer);
+                  makeUnitStackable(epd);
+              }
+              
+              function createHMissile(p: patternbase.Pattern, unit: TrgUnit, row) {
+                  const location = locSetting.hFromArray[row - 1];
+                  const epd = getNextGeneratedUnit();
+                  CreateUnit(1, unit, location, p.forcePlayer);
+                  makeUnitStackable(epd);
+              }
+              
+              ////
+              
+              
+
+
+
+
+[File "D:\Program Files\Starcraft\maps\mwstack\src\location.eps"]
+-------------------------------------------------
+
+              function pxMoveLocationDot(loc: TrgLocation, x, y) {
+[      1 ]        const locationEPD = EPD(0x58DC60) + (loc - 1) * 5;
+                  SetMemoryEPD(locationEPD + 0, SetTo, x);
+                  SetMemoryEPD(locationEPD + 1, SetTo, y);
+                  SetMemoryEPD(locationEPD + 2, SetTo, x);
+                  SetMemoryEPD(locationEPD + 3, SetTo, y);
+              }
+              
+              function pxMoveLocation(loc: TrgLocation, x, y, w, h) {
+[     90 ]        const locationEPD = EPD(0x58DC60) + (loc - 1) * 5;
+[     41 ]        SetMemoryEPD(locationEPD + 0, SetTo, x);
+[     46 ]        SetMemoryEPD(locationEPD + 1, SetTo, y);
+[     47 ]        SetMemoryEPD(locationEPD + 2, SetTo, x + w);
+[   1579 ]        SetMemoryEPD(locationEPD + 3, SetTo, y + h);
+              }
+              
+              function getTopLeft(loc: TrgLocation) {
+[      1 ]        const locid = loc - 1;
+[      3 ]        const locationEPD = EPD(0x58DC60) + locid * 5;
+[     20 ]        return
+                      dwread_epd(locationEPD + 0),
+                      dwread_epd(locationEPD + 1);
+              }
+
+
+
+
+[File "D:\Program Files\Starcraft\maps\mwstack\src\patternbase.eps"]
+-------------------------------------------------
+
+              import locSetting;
+              
+              object Pattern {
+                  var next: selftype;
+                  var timer;
+                  var x, y;
+                  var player;
+                  var forcePlayer;
+                  var callback: EUDFuncPtr(1, 1);
+                  var data;  // Custom data
+              };
+              
+              
+              var patternHead, patternTail = 0, 0;
+              
+              function addPattern(player: TrgPlayer, x, y, callback: EUDFuncPtr(1, 1)) {
+                  const p = Pattern.alloc();
+                  p.callback = callback;
+                  p.timer = 0;
+                  p.x, p.y = x, y;
+                  p.player = player;
+                  p.forcePlayer = locSetting.forceFromPlayer(player);
+              
+                  if(patternTail) Pattern.cast(patternTail).next = p;
+                  else patternHead = p;
+                  p.next = 0;
+                  patternTail = p;
+              }
+              
+              
+              function loopPatterns() {
+                  if(!patternHead) return;
+              
+                  var pv = patternHead;
+                  var pPrev = 0;
+                  while(pv) {
+[      1 ]            const p = Pattern.cast(pv);
+              
+[   1673 ]            locSetting.setMissileLocations(p.forcePlayer);
+              
+[     14 ]            const ret = p.callback(p);
+                      const pNext = p.next;
+              
+                      if(!ret) {
+                          if(p == patternTail) patternTail = pPrev;
+                          if(p == patternHead) patternHead = pNext;
+                          else Pattern.cast(pPrev).next = pNext;
+                          Pattern.free(p);
+                      }
+                      else {
+[      1 ]                p.timer += 1;
+                      }
+                      pPrev = pv;
+                      pv = pNext;
+                  }
+              }
+
+
+
+
+[File "D:\Program Files\Starcraft\maps\mwstack\src\lifesys.eps"]
 -------------------------------------------------
 
               import intro;
@@ -10,14 +556,6 @@
               
               function isPlayerAlive(p: TrgPlayer) {
                   return playerexist(p) && Accumulate(p, Exactly, 0, Gas);
-              }
-              
-              function isBuilderUnit(u: TrgUnit) {
-                  return (
-                      u == $U("Basic Builder") ||
-                      u == $U("Builder") ||
-                      u == $U("Ultimate Builder")
-                  ) ? 1 : 0;
               }
               
               
@@ -51,7 +589,7 @@
                                   SetCurrentPlayer(player);
                                   PlayWAV("staredit\\wav\\Notice.wav");
                                   DisplayText("\x16부품 수리가 완료되었습니다. 부활후3초간 무적상태를 유지합니다.");
-                                  CreateUnit(1, "Basic Builder", playerForce == $Force1 ? $L('f1field') + 1 : $L('f2field') + 1, player);
+                                  CreateUnit(1, "Builder", playerForce == $Force1 ? $L('f1field') + 1 : $L('f2field') + 1, player);
                               }
                               else {
                                   // 생존점수 부족 → 리바이브 불가.
@@ -66,60 +604,15 @@
                           }
                       }
                       else {
-                          SetResources(player, Add, 3, Ore);  // 돈벌자~
-                      }
-                  }
-              
-                  // Death of player units
-                  foreach(ptr, epd : EUDLoopUnit()) {
-                      const unitType = dwread_epd(epd + (0x64 / 4));
-                      if(isBuilderUnit(unitType)) {
-[   6515 ]                const player = dwbreak(dwread_epd(epd + 0x4C))[[2]];
-                          const opponentPlayer = ($P1 <= player && player <= $P3) ? $P8 : $P7;
-                          
-                          const position = dwread_epd(epd + (0x28 / 4));
-                          const posX, posY = dwbreak(position)[[0, 1]];
-                          loc.pxMoveLocation(posX, posY);
-                          MoveLocation('ptrace', 'Map Revealer', P12, 'pxmove');
-              
-                          if(Bring(opponentPlayer, AtLeast, 1, '(men)', 'ptrace')) {
-                              KillUnitAt(All, '(any unit)', 'field', player);
-                              KillUnitAt(1, '(men)', 'ptrace', opponentPlayer);
-                              SetCurrentPlayer(player);
-                              DisplayText("\x16적의 미사일이 명중하였습니다.\r\n\r\n\x16부품이 수리될때까지 기다려주세요.");
-                              SetResources(player, SetTo, reviveTime, Gas);
+[      3 ]                const prevOre = dwread_epd(EPD(0x57F0F0) + player);
+[      3 ]                SetResources(player, Add, 10 - prevOre / 200, Ore);  // 돈벌자~
+                          if(Accumulate(player, AtLeast, 2000, Ore)) {
+                              SetResources(player, SetTo, 2000, Ore);
                           }
                       }
                   }
               
-                  SetInvincibility(Enable, '(any unit)', AllPlayers, 'Anywhere');
-              }
-
-
-
-
-[File "C:\Users\Administrator\Documents\Starcraft\Maps\mwstack\src\main.eps"]
--------------------------------------------------
-
-              import intro;
-              import location as loc;
-              import lifesys;
-              import patterns.patternbase;
-              import patterns.stage;
-              
-              
-              function onPluginStart() {
-                  lifesys.initLifeSys();
-                  // patternbase.addPattern(stage.f_impl);
-              }
-              
-              
-              function afterTriggerExec() {
-                  SetInvincibility(Enable, '(any unit)', AllPlayers, 'Anywhere');
-              
-                  // patternbase.loopPatterns();
-                  intro.introLoop();
-[   6515 ]        lifesys.lifeSysLoop();
+[      2 ]        SetInvincibility(Enable, '(any unit)', AllPlayers, 'Anywhere');
               }
 
 

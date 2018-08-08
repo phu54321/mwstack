@@ -18,14 +18,17 @@ function impl(p: patternbase.Pattern) {
     for(var angle = 0 ; angle < 90 ; angle += 15) {
         const cos, sin = lengthdir(32 * 5, angle);
         loc.pxMoveLocation('pxmove', posX - cos, posY - sin, cos * 2, sin * 2);
-        Order('(men)', p.forcePlayer, 'pxmove', Move, 'pxmove');
+        Order('(men)', P7, 'pxmove', Move, 'pxmove');
+        Order('(men)', P8, 'pxmove', Move, 'pxmove');
     }
 
     if(p.timer == 24 * 5) {
-        SetCurrentPlayer(p.forcePlayer);
         for(var angle = 0 ; angle < 90 ; angle += 15) {
             const cos, sin = lengthdir(32 * 5, angle);
             loc.pxMoveLocation('pxmove', posX - cos, posY - sin, cos * 2, sin * 2);
+            SetCurrentPlayer(P7);
+            RunAIScriptAt('JYDg', 'pxmove');
+            SetCurrentPlayer(P8);
             RunAIScriptAt('JYDg', 'pxmove');
         }
         return 0;

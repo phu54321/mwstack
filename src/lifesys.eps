@@ -55,7 +55,11 @@ function lifeSysLoop() {
             }
         }
         else {
-            SetResources(player, Add, 3, Ore);  // 돈벌자~
+            const prevOre = dwread_epd(EPD(0x57F0F0) + player);
+            SetResources(player, Add, 10 - prevOre / 200, Ore);  // 돈벌자~
+            if(Accumulate(player, AtLeast, 2000, Ore)) {
+                SetResources(player, SetTo, 2000, Ore);
+            }
         }
     }
 

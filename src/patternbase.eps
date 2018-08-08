@@ -21,19 +21,12 @@ function addPattern(player: TrgPlayer, x, y, callback: EUDFuncPtr(1, 1)) {
     p.player = player;
     p.forcePlayer = locSetting.forceFromPlayer(player);
 
-    if(patternHead) {
-        const lastPattern = Pattern.cast(patternTail);
-        lastPattern.next = p;
-        p.next = 0;
-        patternTail = p;
-    }
-
-    else {
-        p.next = 0;
-        patternHead = p;
-        patternTail = p;
-    }
+    if(patternTail) Pattern.cast(patternTail).next = p;
+    else patternHead = p;
+    p.next = 0;
+    patternTail = p;
 }
+
 
 function loopPatterns() {
     if(!patternHead) return;
@@ -42,17 +35,16 @@ function loopPatterns() {
     var pPrev = 0;
     while(pv) {
         const p = Pattern.cast(pv);
-        const pNext = p.next;
 
         locSetting.setMissileLocations(p.forcePlayer);
 
-        if(!p.callback(p)) {
-            if(p == patternHead) {
-                patternHead = pNext;
-            }
-            else {
-                Pattern.cast(pPrev).next = pNext;
-            }
+        const ret = p.callback(p);
+        const pNext = p.next;
+
+        if(!ret) {
+            if(p == patternTail) patternTail = pPrev;
+            if(p == patternHead) patternHead = pNext;
+            else Pattern.cast(pPrev).next = pNext;
             Pattern.free(p);
         }
         else {
