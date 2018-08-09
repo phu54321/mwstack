@@ -32,7 +32,6 @@ function soy_impl1(p: patternbase.Pattern) {
         const ux, uy = common.getBulletPos(epd);
         patternbase.addPattern(p.player, ux, uy, f_soy_impl2);
         patternbase.addPattern(p.player, ux, uy, f_soy_impl2);
-        patternbase.addPattern(p.player, ux, uy, f_soy_impl2);
         common.killBullet(epd);
         return 0;
     }
@@ -54,7 +53,6 @@ function soy_impl2(p: patternbase.Pattern) {
     if(p.timer == 48) {
         const epd = p.data;
         const ux, uy = common.getBulletPos(epd);
-        patternbase.addPattern(p.player, ux, uy, f_soy_impl3);
         patternbase.addPattern(p.player, ux, uy, f_soy_impl3);
         patternbase.addPattern(p.player, ux, uy, f_soy_impl3);
         common.killBullet(epd);
