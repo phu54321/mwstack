@@ -11,7 +11,8 @@ object Pattern {
 };
 
 
-var patternHead, patternTail = 0, 0;
+const patternHead = Pattern.alloc();
+var patternTail = patternHead;
 
 function addPattern(player: TrgPlayer, x, y, callback: EUDFuncPtr(1, 1)) {
     const p = Pattern.alloc();
@@ -21,18 +22,15 @@ function addPattern(player: TrgPlayer, x, y, callback: EUDFuncPtr(1, 1)) {
     p.player = player;
     p.forcePlayer = locSetting.forceFromPlayer(player);
 
-    if(patternTail) Pattern.cast(patternTail).next = p;
-    else patternHead = p;
-    p.next = 0;
+    Pattern.cast(patternTail).next = p;
     patternTail = p;
+    p.next = 0;
 }
 
 
 function loopPatterns() {
-    if(!patternHead) return;
-
-    var pv = patternHead;
-    var pPrev = 0;
+    var pv = patternHead.next;
+    var pPrev = patternHead;
     while(pv) {
         const p = Pattern.cast(pv);
 
@@ -43,14 +41,14 @@ function loopPatterns() {
 
         if(!ret) {
             if(p == patternTail) patternTail = pPrev;
-            if(p == patternHead) patternHead = pNext;
-            else Pattern.cast(pPrev).next = pNext;
+            Pattern.cast(pPrev).next = pNext;
             Pattern.free(p);
+            pv = pNext;
         }
         else {
             p.timer += 1;
+            pPrev = pv;
+            pv = pNext;
         }
-        pPrev = pv;
-        pv = pNext;
     }
 }

@@ -5,15 +5,16 @@ import location as loc;
 
 function impl(p: patternbase.Pattern) {
     if(p.timer == 0) {
-        const ofX, ofY = loc.getTopLeft('opponentField');
-        const posX, posY = ofX + 32 * p.x + 48, ofY + 32 * p.y + 32;
+        const afX, afY = loc.getTopLeft('allyField');
+        const posX, posY = afX + 32 * p.x + 48, afY + 32 * p.y + 32;
         p.data = posY * 65536 + posX;
     }
 
     const posX, posY = dwbreak(p.data)[[0, 1]];
     loc.pxMoveLocationDot('pxmove', posX, posY);
     CreateUnit(1, 'Trap', 'pxmove', p.forcePlayer);
-    KillUnitAt(All, 'Trap', 'pxmove', AllPlayers);
+    KillUnitAt(All, '(men)', 'pxmove', P7);
+    KillUnitAt(All, '(men)', 'pxmove', P8);
 
     for(var angle = 0 ; angle < 90 ; angle += 15) {
         const cos, sin = lengthdir(32 * 5, angle);
@@ -22,9 +23,9 @@ function impl(p: patternbase.Pattern) {
         Order('(men)', P8, 'pxmove', Move, 'pxmove');
     }
 
-    if(p.timer == 24 * 5) {
+    if(p.timer == 24 * 3) {
         for(var angle = 0 ; angle < 90 ; angle += 15) {
-            const cos, sin = lengthdir(32 * 5, angle);
+            const cos, sin = lengthdir(32 * 3, angle);
             loc.pxMoveLocation('pxmove', posX - cos, posY - sin, cos * 2, sin * 2);
             SetCurrentPlayer(P7);
             RunAIScriptAt('JYDg', 'pxmove');
